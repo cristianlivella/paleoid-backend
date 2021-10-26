@@ -1,0 +1,40 @@
+version: "3.5"
+
+services:
+  offers-lumen:
+    image: # Change with your own image built with Dockerfile
+    container_name: paleoid-lumen
+    environment:
+      - XDEBUG_MODE=${XDEBUG_MODE}
+    user: "www-data:www-data"
+    volumes:
+      - .:/var/www/html:cached
+      - ./private/tmp:/tmp:cached
+    ports:
+      - ${PHP_HOST_PORT}:80
+    networks:
+      backend:
+        aliases:
+          - paleoid-lumen
+
+  paleoid-db:
+    image: mysql:8
+    container_name: paleoid-db
+    volumes:
+      - paleoid-db-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+    ports:
+      - ${MYSQL_HOST_PORT}:3306
+    networks:
+      backend:
+        aliases:
+          - paleoid-db
+
+volumes:
+  paleoid-db-data:
+    driver: local
+
+networks:
+  backend:
