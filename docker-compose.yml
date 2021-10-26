@@ -1,7 +1,7 @@
 version: "3.5"
 
 services:
-  offers-lumen:
+  paleoid-lumen:
     image: # Change with your own image built with Dockerfile
     container_name: paleoid-lumen
     environment:
